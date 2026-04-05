@@ -1,0 +1,17 @@
+From: accounts@acmecorp.com
+To: payment-processor@externalgateway.com
+Subject: Customer Payment Details for Refund Processing
+Date: Mon, 5 Apr 2026 11:30:00 +0000
+
+Hello,
+
+Please process the following refunds for our customers:
+
+Customer A: Card 4111111111111111  Amount: INR 4500
+Customer B: Card 5500005555555559  Amount: INR 2300
+Customer C: Card 4012888888881881  Amount: INR 7800
+
+password=MySecretPass123 (portal login for confirmation)
+
+Regards,
+Accounts Team

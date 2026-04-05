@@ -1,0 +1,3 @@
+# PhishGuard — No external dependencies required!
+# All features use Python standard library only.
+# Optional: pip install textblob   (if you want richer sentiment analysis)
