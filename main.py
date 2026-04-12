@@ -8,7 +8,7 @@ Usage:
     python main.py --mode incoming          # scan sample_emails/
     python main.py --mode outgoing          # scan outgoing_drafts/
     python main.py --mode both              # scan all
-    python main.py --email "folder_naem\file.eml" # scan a single file
+    python main.py --email "folder_name\file.eml" # scan a single file
 '''
 
 import os
