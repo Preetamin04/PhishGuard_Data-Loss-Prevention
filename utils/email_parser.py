@@ -33,6 +33,7 @@ POSITIVE_WORDS = {
     "congratulations", "winner", "prize", "reward", "free", "gift",
     "lucky", "selected", "bonus", "offer", "earn", "claim"
 }
+
 NEGATIVE_WORDS = {
     "suspended", "blocked", "terminated", "locked", "expired",
     "unauthorized", "illegal", "violation", "penalty", "arrest", "fraud"
