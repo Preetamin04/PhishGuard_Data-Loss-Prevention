@@ -21,7 +21,7 @@ PATTERNS = {
     "PAN Card":
         re.compile(r"\b[A-Z]{5}[0-9]{4}[A-Z]\b"),
 
-    # Aadhaar: 12 digits, often written as XXXX XXXX XXXX
+    # Aadhaar: 12 digits
     "Aadhaar Number":
         re.compile(r"\b[2-9]\d{3}[\s\-]?\d{4}[\s\-]?\d{4}\b"),
 
