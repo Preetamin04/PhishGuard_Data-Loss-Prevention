@@ -7,14 +7,7 @@ PhishGuard/
 ├── main.py                    ← Entry point (run this)
 ├── requirements.txt
 ├── sample_emails/             ← Incoming emails to scan for phishing
-│   ├── crypto_urgent.eml
-│   ├── advance_fee_scam.eml
-│   ├── paypal_spoof.eml
-│   └── safe_hr_email.eml
 ├── outgoing_drafts/           ← Outgoing emails to scan for data leakage
-│   ├── pan_aadhaar_leak.eml
-│   ├── credit_card_leak.eml
-│   └── safe_meeting.eml
 └── utils/
     ├── email_parser.py        ← Parses .eml + runs phishing detectors
     ├── risk_engine.py         ← Converts indicators → risk score + severity
