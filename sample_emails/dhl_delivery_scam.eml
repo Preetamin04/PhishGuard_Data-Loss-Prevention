@@ -1,0 +1,19 @@
+From: DHL Express <dhl-support@gmail.com>
+To: user@example.com
+Subject: Your DHL Parcel is Held - Pay Delivery Fee Now
+Date: Mon, 20 Apr 2026 10:15:00 +0000
+Authentication-Results: mx.example.com; spf=fail; dkim=fail
+
+Dear Customer,
+
+Your parcel has been held at our warehouse. A delivery fee of INR 499 is required to release it.
+
+Parcel ID: DHL9823741
+Parcel held at: Mumbai Sorting Centre
+
+Click here immediately to pay: http://dhl-parcel-release.malware-dl.xyz/pay
+
+Respond now or your parcel will be returned after 48 hours.
+
+Regards,
+DHL Express Support Team

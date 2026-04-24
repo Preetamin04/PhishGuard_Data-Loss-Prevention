@@ -1,0 +1,21 @@
+From: Newsletter Team <newsletter@techblog.com>
+To: subscriber@example.com
+Subject: Monthly Tech Digest - April 2026
+Date: Wed, 22 Apr 2026 08:00:00 +0000
+Authentication-Results: mx.example.com; spf=pass; dkim=pass
+
+Hi there,
+
+Welcome to the April 2026 edition of our monthly tech digest!
+
+This month's highlights:
+- Top 5 open-source security tools of 2026
+- How rule-based systems outperform AI in explainability
+- Getting started with Python for cybersecurity
+
+Visit our website for the full articles: https://techblog.com/april-2026-digest
+
+Thank you for subscribing. You can unsubscribe at any time by visiting https://techblog.com/unsubscribe
+
+Best regards,
+The TechBlog Newsletter Team
