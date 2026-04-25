@@ -121,7 +121,7 @@ with st.sidebar:
 # MAIN 
 
 st.title("🛡️ PhishGuard — Email Security Analyser")
-st.caption("Rule-based phishing detection + data loss prevention · No AI · No internet required")
+st.caption("Rule-based phishing detection + data loss prevention")
 st.divider()
 
 # TAB 1 — INCOMING PHISHING DETECTION
