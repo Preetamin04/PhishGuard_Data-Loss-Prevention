@@ -1,8 +1,8 @@
 '''
 PhishGuard - Rule-Based Phishing Detection & Data Loss Prevention
 
-Analyzes INCOMING emails for phishing threats and OUTGOING emails
-for sensitive data leakage - using  rule-based logic.
+Analyzes INCOMING emails for phishing threats 
+OUTGOING emails for sensitive data leakage 
 
 Usage:
     python main.py --mode incoming          # scan sample_emails/
@@ -57,64 +57,68 @@ def batch_pattern_analysis(records):
     return patterns
 
 # CLI entry point
-def main():
-    print_banner()
+print_banner()
 
-    parser = argparse.ArgumentParser(description="PhishGuard – Email Security Analyser")
-    parser.add_argument("--mode",  choices=["incoming", "outgoing", "both"], default="both")
-    parser.add_argument("--email", help="Scan a single .eml file")
-    args = parser.parse_args()
+parser = argparse.ArgumentParser(description="PhishGuard – Email Security Analyser")
+parser.add_argument("--mode", choices=["incoming", "outgoing", "both"], default="both")
+parser.add_argument("--email", help="Scan a single .eml file")
+args = parser.parse_args()
 
-    # Single-file mode
-    if args.email:
-        if not os.path.isfile(args.email):
-            print(f"[ERROR] File not found: {args.email}")
-            sys.exit(1)
-        parsed = parse_eml_file(args.email)
-        parsed["filename"] = os.path.basename(args.email)
-        score, severity = calculate_risk(
-            parsed["indicators"],
-            parsed.get("attachment_score", 0),
-            parsed.get("auth_results", {})
-        )
-        parsed["risk_score"] = score
-        parsed["severity"]   = severity
-        print_incoming_report([parsed], {})
-        return
+# Single-file mode
+if args.email:
+    if not os.path.isfile(args.email):
+        print(f"[ERROR] File not found: {args.email}")
+        sys.exit(1)
 
-    # Batch incoming mode 
-    if args.mode in ("incoming", "both"):
-        print("\n" + "═"*60)
-        print("  📥  INCOMING MAIL — PHISHING DETECTION")
-        print("═"*60)
-        records  = scan_incoming("sample_emails")
-        patterns = batch_pattern_analysis(records)
-        print_incoming_report(records, patterns)
+    parsed = parse_eml_file(args.email)
+    parsed["filename"] = os.path.basename(args.email)
 
-    # Outgoing / DLP mode 
-    if args.mode in ("outgoing", "both"):
-        print("\n" + "═"*60)
-        print("  📤  OUTGOING MAIL — DATA LOSS PREVENTION (DLP)")
-        print("═"*60)
-        outgoing_dir = "outgoing_drafts"
-        if not os.path.isdir(outgoing_dir):
-            print(f"[!] No '{outgoing_dir}/' folder found. Skipping DLP scan.")
-            return
+    score, severity = calculate_risk(
+        parsed["indicators"],
+        parsed.get("attachment_score", 0),
+        parsed.get("auth_results", {})
+    )
+
+    parsed["risk_score"] = score
+    parsed["severity"] = severity
+
+    print_incoming_report([parsed], {})
+
+# Batch incoming mode
+if args.mode in ("incoming", "both") and not args.email:
+    print("\n" + "═"*60)
+    print("  📥  INCOMING MAIL — PHISHING DETECTION")
+    print("═"*60)
+
+    records = scan_incoming("sample_emails")
+    patterns = batch_pattern_analysis(records)
+    print_incoming_report(records, patterns)
+
+# Outgoing / DLP mode
+if args.mode in ("outgoing", "both") and not args.email:
+    print("\n" + "═"*60)
+    print("  📤  OUTGOING MAIL — DATA LOSS PREVENTION (DLP)")
+    print("═"*60)
+
+    outgoing_dir = "outgoing_drafts"
+
+    if not os.path.isdir(outgoing_dir):
+        print(f"[!] No '{outgoing_dir}/' folder found. Skipping DLP scan.")
+    else:
         files = [f for f in os.listdir(outgoing_dir) if f.endswith(".eml")]
+
         if not files:
             print("[!] No outgoing .eml drafts to scan.")
-            return
-        dlp_records = []
-        for fname in files:
-            path   = os.path.join(outgoing_dir, fname)
-            result = scan_outgoing(path)
-            result["filename"] = fname
-            dlp_records.append(result)
-        print_outgoing_report(dlp_records)
+        else:
+            dlp_records = []
+            for fname in files:
+                path = os.path.join(outgoing_dir, fname)
+                result = scan_outgoing(path)
+                result["filename"] = fname
+                dlp_records.append(result)
 
-    print("\n" + "═"*60)
-    print("PhishGuard scan complete.")
-    print("═"*60 + "\n")
+            print_outgoing_report(dlp_records)
 
-if __name__ == "__main__":
-    main()
+print("\n" + "═"*60)
+print("PhishGuard scan complete.")
+print("═"*60 + "\n")

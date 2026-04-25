@@ -6,7 +6,6 @@ from utils.risk_engine   import calculate_risk
 from utils.dlp_engine    import scan_outgoing
 
 # PAGE CONFIG 
-
 st.set_page_config(
     page_title="PhishGuard",
     page_icon="🛡️",
@@ -119,7 +118,7 @@ with st.sidebar:
     st.caption("Add your own `.eml` files to these folders and re-run the scan.")
 
 
-# ── MAIN ─────────────────────────────────────────────────────────────────────
+# MAIN 
 
 st.title("🛡️ PhishGuard — Email Security Analyser")
 st.caption("Rule-based phishing detection + data loss prevention · No AI · No internet required")
