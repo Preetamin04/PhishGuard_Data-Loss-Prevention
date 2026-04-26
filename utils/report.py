@@ -55,7 +55,6 @@ def _print_patterns(patterns):
                 short = (item[:72] + "…") if len(item) > 75 else item
                 print(f"      • {short!r}  ×{count}")
 
-
 def _print_email_block(rec):
     icon = SEVERITY_ICON.get(rec["severity"], "❓")
     print("\n" + "─" * 60)

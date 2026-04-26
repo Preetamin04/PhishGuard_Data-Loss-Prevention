@@ -13,9 +13,7 @@ import os
 from email import policy
 from email.parser import BytesParser
 
-# ==============================
 # Regex Patterns for DLP
-# ==============================
 PATTERNS = {
     # Indian PAN: 5 letters, 4 digits, 1 letter  e.g. ABCDE1234F
     "PAN Card":
@@ -87,13 +85,11 @@ BULK_DATA_EXTENSIONS = {".xlsx", ".xls", ".csv", ".db", ".sql", ".json", ".xml"}
 # Minimum hits before flagging "bulk data"
 BULK_ROW_THRESHOLD = 10
 
-# Helper Functions
+# Credit/Debit CArd number validation
 def _luhn_check(number: str) -> bool:
-    '''Credit card number detection using the Luhn Algorithm.'''
     digits = [int(d) for d in number if d.isdigit()]
     if len(digits) < 13:
         return False
-
     total = 0
     for i, d in enumerate(reversed(digits)):
         if i % 2 == 1:
@@ -101,25 +97,21 @@ def _luhn_check(number: str) -> bool:
             if d > 9:
                 d -= 9
         total += d
-
     return total % 10 == 0
 
-
+# Remove spaces and hyphens from detected numbers
 def _normalize_number(number: str) -> str:
-    '''Remove spaces and hyphens from detected numbers.'''
     return re.sub(r"[^\d]", "", number)
 
-
+# Mask sensitive data except the last few digits
 def _mask_sensitive_data(value: str, visible: int = 4) -> str:
-    '''Mask sensitive data except the last few digits.'''
     clean_value = _normalize_number(value)
     if len(clean_value) <= visible:
         return clean_value
     return "X" * (len(clean_value) - visible) + clean_value[-visible:]
 
-
+# Extract text body
 def _get_text_body(msg) -> str:
-    '''Extract text body from email message.'''
     if msg.is_multipart():
         parts = []
         for part in msg.walk():
@@ -134,9 +126,8 @@ def _get_text_body(msg) -> str:
     payload = msg.get_payload(decode=True)
     return payload.decode(errors="ignore") if payload else ""
 
-
+# Return list of DLP violations
 def _scan_attachments(msg):
-    '''Return list of DLP violations found in attachment metadata.'''
     violations = []
     for part in msg.walk():
         if part.get_content_disposition() != "attachment":
@@ -175,7 +166,6 @@ def _scan_attachments(msg):
     return violations
 
 def _classify_severity(pattern_type: str) -> str:
-    '''Classify severity based on detected data type.'''
     critical = {"PAN Card", "Aadhaar Number", "Credit/Debit Card", "Password/Secret"}
     return "CRITICAL" if pattern_type in critical else "HIGH"
 

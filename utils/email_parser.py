@@ -3,6 +3,7 @@ import os
 from email import policy
 from email.parser import BytesParser
 
+# Lists: what to detect
 URGENCY_WORDS = [
     "urgent", "immediately", "verify now", "action required",
     "account suspended", "click now", "limited time", "respond now",
@@ -76,7 +77,7 @@ BANNED_DOMAINS    = {"fakesite.com", "phishlink.ru", "malware-dl.xyz"}
 BANNED_KEYWORDS   = {"reset wallet", "update token", "your prize"}
 BANNED_EXTENSIONS = {".iso", ".svg"}
 
-# Helper extractors
+# Extract email body
 def _get_body(msg) -> str:
     if msg.is_multipart():
         for part in msg.walk():
@@ -87,9 +88,11 @@ def _get_body(msg) -> str:
         return msg.get_payload(decode=True).decode(errors="ignore")
     return ""
 
+# Extract URLs
 def _extract_urls(text: str):
     return re.findall(r"https?://[^\s<>\"']+", text)
 
+# Authentication parsing
 def _parse_auth(msg) -> dict:
     results = {"spf": "not_found", "dkim": "not_found"}
     header  = msg.get("Authentication-Results", "")
@@ -99,6 +102,7 @@ def _parse_auth(msg) -> dict:
             results[proto] = m.group(1).lower()
     return results
 
+# Attachment analysis
 def _detect_attachments(msg):
     names, suspicious, score = [], [], 0
     for part in msg.walk():
@@ -113,6 +117,7 @@ def _detect_attachments(msg):
                     score += w
     return names, suspicious, score
 
+# HTML form detection
 def _detect_html_forms(msg):
     tags = []
     parts = msg.walk() if msg.is_multipart() else [msg]
@@ -139,7 +144,7 @@ def _suspicious_urls(urls, from_domain: str):
         if re.match(r"(\d{1,3}\.){3}\d{1,3}", domain):
             found.append(f"IP address URL: {url}")
         if domain.count(".") > 3:
-            found.append(f"Obfuscated subdomain: {domain}")
+            found.append(f"Confused subdomain: {domain}")
         if from_domain and from_domain not in domain:
             found.append(f"Domain mismatch — sender:{from_domain} / link:{domain}")
     return found
