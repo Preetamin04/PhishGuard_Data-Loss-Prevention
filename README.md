@@ -2,18 +2,6 @@
 Rule-Based Phishing Detection + Data Loss Prevention (DLP)
 No AI. No external APIs. Pure deterministic rule-based logic — readable, explainable, and auditable.
 
-# Project Structure
-PhishGuard/
-├── main.py                    ← Entry point (run this)
-├── requirements.txt
-├── sample_emails/             ← Incoming emails to scan for phishing
-├── outgoing_drafts/           ← Outgoing emails to scan for data leakage
-└── utils/
-    ├── email_parser.py        ← Parses .eml + runs phishing detectors
-    ├── risk_engine.py         ← Converts indicators → risk score + severity
-    ├── dlp_engine.py          ← Scans outgoing email for sensitive data
-    └── report.py              ← Terminal output / formatting
-
 # How to Run
 
 ```bash
